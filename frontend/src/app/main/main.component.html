@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="row">
+    <div class="col-12 col-md-3 col-xl-2 bd-sidebar"></div>
+    <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5">
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control"
+                     placeholder="Search" [formControl]="searchControl">
+            </div>
+          </div>
+        </form>
+        <div class="table-div text-center" *ngIf="getKeysForMap(content).length > 0 || getKeysForMap(favorites).length > 0">
+          <table class="table">
+            <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Genre</th>
+              <th>URL</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th></th>
+            </tr>
+            </tbody>
+            <ng-container *ngFor="let key of getKeys()">
+              <thead class="thead-light">
+              <tr>
+                <th class="text-left" colspan="5">{{key}}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <ng-container *ngIf="!!favorites[key]">
+                <tr *ngFor="let response of favorites[key]" class="table-success">
+                  <th><img [src]="response.artwork"/> <br/>{{response.id}}</th>
+                  <th>{{response.name}}</th>
+                  <th>{{response.genre}}</th>
+                  <th><a [href]="response.url">iTunes</a></th>
+                  <th> <button class="btn btn-outline-secondary" (click)="favorite(key, response)">UNFAVORITE</button></th>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="!!content[key]">
+
+                <tr *ngFor="let response of content[key]">
+                  <th><img [src]="response.artwork"/> <br/>{{response.id}}</th>
+                  <th>{{response.name}}</th>
+                  <th>{{response.genre}}</th>
+                  <th><a [href]="response.url">iTunes</a></th>
+                  <th> <button class="btn btn-outline-secondary" (click)="favorite(key, response)">{{indexOf(key, response, favorites) === -1 ? 'FAVORITE' : 'UNFAVORITE'}}</button> </th>
+                </tr>
+              </ng-container>
+              </tbody>
+            </ng-container>
+          </table>
+        </div>
+        <div class="card" *ngIf="getKeysForMap(content).length === 0">
+          <div class="card-body">
+            Use the search function above to find some content.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

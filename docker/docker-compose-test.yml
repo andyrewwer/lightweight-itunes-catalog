@@ -1,0 +1,8 @@
+version: '3'
+services:
+  postgres:
+    build: .
+    hostname: postgres-song
+    container_name:  postgres-song
+    ports:
+      - "5432:5432"
